@@ -167,9 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cm: [
             { name: "JOYAS DE AUTOR", img: "images/foto1.jpg", gallery: [] },
             { name: "ESTUDIO PSICOLOGÍA", img: "images/foto2.jpg", gallery: [] },
-            { 
-                name: "CONTENIDO PARA JOYAS DE AUTOR", 
-                img: "images/Portada_Contenido_Para_Joyas_De_Autor.jpg", 
+            { name: "CONTENIDO PARA JOYAS DE AUTOR", img: "images/Portada_Contenido_Para_Joyas_De_Auto.jpg", 
                 gallery: [
                     "images/cpjda1.jpg", "images/cpjda2.jpg", "images/cpjda3.jpg", 
                     "images/cpjda4.jpg", "images/cpjda5.jpg", "images/cpjda6.jpg",
