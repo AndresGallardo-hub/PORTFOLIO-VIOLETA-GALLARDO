@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIOLETA.GALLARDO — PORTFOLIO</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="grain"></div>
+    <div id="custom-cursor"></div>
+
+    <header class="float-nav hero-entrance">
+        <div class="logo">VIOLETA.GALLARDO</div>
+        <nav>
+            <a href="#" class="nav-item" onclick="goBack('home')">Index</a>
+            <a href="#" id="about-link" class="nav-item">About</a>
+        </nav>
+    </header>
+
+    <main class="viewport" id="main-content">
+        
+        <section id="view-home">
+            <section class="scrolling-text">
+                <h1 class="big-title hero-entrance">VISUAL ARTIST — VISUAL ARTIST —</h1>
+            </section>
+
+            <section class="floating-gallery">
+                <article class="item layer-1 hero-entrance draggable" data-speed="1.2">
+                    <div class="media-wrapper">
+                        <img src="images/foto1.jpg" alt="Work 01" draggable="false">
+                    </div>
+                    <p class="label">© 2025 / COLLAGE BY AVELLANEDA STUDIO</p>
+                </article>
+                
+                <div class="item layer-2 hero-entrance draggable" data-speed="0.5">
+                    <h2 class="serif-title" style="user-select: none;">L’art de la <br>imperfection</h2>
+                </div>
+
+                <article class="item layer-3 hero-entrance draggable" data-speed="1.8">
+                    <div class="media-wrapper">
+                        <img src="images/foto2.jpg" alt="Work 02" draggable="false">
+                    </div>
+                    <p class="label">© 2026 / COLLAGE 01</p>
+                </article>
+
+                <article class="item layer-4 hero-entrance draggable" data-speed="2.3">
+                    <div class="media-wrapper">
+                        <img src="images/foto3.jpg" alt="Work 03" draggable="false">
+                    </div>
+                    <p class="label">© 2026 / COLLAGE 02</p>
+                </article>
+
+                <div class="magnetic-wrap hero-entrance">
+                    <div class="magnetic-item">
+                        <span class="btn-text">EXPLORE</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="services-section hero-entrance">
+                <h2 class="section-label">SELECTED WORK —</h2>
+                
+                <div class="service-item main-category" onclick="showCategory('proyectos')">
+                    <span class="service-num">01</span>
+                    <h3 class="service-title">MIS PROYECTOS</h3>
+                </div>
+
+                <div class="service-item main-category" onclick="showCategory('cm')">
+                    <span class="service-num">02</span>
+                    <h3 class="service-title">CM</h3>
+                </div>
+            </section>
+        </section>
+
+        <section id="view-list" class="hidden section-padding">
+            <div class="list-header">
+                <button class="back-btn" onclick="goBack('home')">← VOLVER</button>
+                <h2 id="category-title" class="category-display-title"></h2>
+            </div>
+            <div id="productions-container" class="editorial-grid"></div>
+        </section>
+
+        <section id="view-detail" class="hidden section-padding">
+            <button class="back-btn" onclick="goBack('list')">← VOLVER AL LISTADO</button>
+            <h2 id="production-title" class="serif-title-detail"></h2>
+            <div id="media-content" class="gallery-content"></div>
+        </section>
+
+    </main>
+
+    <div id="about-section" class="about-overlay">
+        <div class="about-content">
+            <button id="close-about" class="close-btn">CLOSE —</button>
+            <h2 class="about-title">ABOUT THE STUDIO</h2>
+            <div class="about-text">
+                <p class="about-services">Producción de moda y eventos · Dirección creativa · Estilismo · Creación de contenido</p>
+                <br>
+                <p>
+                    <span class="highlight">Soy estudiante de Producción de Moda y Eventos.</span>
+                    <br><br>
+                    Desarrollo propuestas creativas para marcas y proyectos personales, acompañando el proceso desde la idea hasta la materialización.
+                    Trabajo en la construcción de identidades visuales con una mirada estética, conceptual y estratégica.
+                </p>
+                <br>
+                <p class="about-footer">.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
