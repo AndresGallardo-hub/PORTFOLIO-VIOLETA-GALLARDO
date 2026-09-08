@@ -7,46 +7,82 @@ document.addEventListener('DOMContentLoaded', () => {
         entranceElements.forEach(el => el.classList.add('active'));
     }, 400);
 
-    // Cursor Movement
+    // Movimiento de Cursor Personalizado
     document.addEventListener('mousemove', (e) => {
-        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+        if (cursor) {
+            cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+        }
     });
 
-    // SISTEMA DRAG ROBUSTO COMPLETO
-    let isDragging = false, activeItem = null, startX, startY, initialX, initialY;
+    // EFECTO MAGNÉTICO PARA EL BOTÓN EXPLORE
+    const magneticWrap = document.querySelector('.magnetic-wrap');
+    const magneticItem = document.querySelector('.magnetic-item');
 
-    document.querySelectorAll('.draggable').forEach(item => {
-        item.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            activeItem = item;
-            const rect = item.getBoundingClientRect();
-            startX = e.clientX;
-            startY = e.clientY;
-            initialX = rect.left;
-            initialY = rect.top;
-            item.style.transition = "none";
-            item.style.zIndex = "1000";
+    if (magneticWrap && magneticItem) {
+        magneticWrap.addEventListener('mousemove', (e) => {
+            const rect = magneticWrap.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            magneticItem.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
         });
+
+        magneticWrap.addEventListener('mouseleave', () => {
+            magneticItem.style.transform = `translate(0px, 0px)`;
+        });
+    }
+
+    // SISTEMA DRAG ROBUSTO UNIFICADO (MOUSE + TOUCH)
+    let isDragging = false, activeItem = null, startX, startY, initialLeft, initialTop;
+
+    const getPointerPos = (e) => ({
+        x: e.touches ? e.touches[0].clientX : e.clientX,
+        y: e.touches ? e.touches[0].clientY : e.clientY
     });
 
-    document.addEventListener('mousemove', (e) => {
+    const startDrag = (e, item) => {
+        isDragging = true;
+        activeItem = item;
+        const pos = getPointerPos(e);
+        startX = pos.x;
+        startY = pos.y;
+        initialLeft = item.offsetLeft;
+        initialTop = item.offsetTop;
+        
+        item.style.transition = "none";
+        item.style.zIndex = "1000";
+    };
+
+    const moveDrag = (e) => {
         if (!isDragging || !activeItem) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        activeItem.style.left = (initialX + dx) + "px";
-        activeItem.style.top = (initialY + dy + window.scrollY) + "px";
-    });
+        const pos = getPointerPos(e);
+        const dx = pos.x - startX;
+        const dy = pos.y - startY;
 
-    document.addEventListener('mouseup', () => {
-        if(activeItem) {
+        activeItem.style.left = `${initialLeft + dx}px`;
+        activeItem.style.top = `${initialTop + dy}px`;
+    };
+
+    const stopDrag = () => {
+        if (activeItem) {
             activeItem.style.zIndex = "10";
             activeItem.style.transition = "transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)";
         }
         isDragging = false;
         activeItem = null;
+    };
+
+    document.querySelectorAll('.draggable').forEach(item => {
+        item.addEventListener('mousedown', (e) => startDrag(e, item));
+        item.addEventListener('touchstart', (e) => startDrag(e, item), { passive: true });
     });
 
-    // --- BASE DE DATOS DE PORTFOLIO (CON LAS 8 PRODUCCIONES DE MIS PROYECTOS Y TODAS SUS FOTOS) ---
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('touchmove', moveDrag, { passive: true });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchend', stopDrag);
+
+    // --- BASE DE DATOS DE PORTFOLIO ---
     const portfolioData = {
         proyectos: [
             { 
@@ -131,7 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
         cm: [
             { name: "JOYAS DE AUTOR", img: "images/foto1.jpg", gallery: [] },
             { name: "ESTUDIO PSICOLOGÍA", img: "images/foto2.jpg", gallery: [] },
-            { name: "CONTENIDO PARA JOYAS DE AUTOR", img: "images/images/Portada_Contenido_Para_Joyas_De_Auto.jpg", 
+            { 
+                name: "CONTENIDO PARA JOYAS DE AUTOR", 
+                img: "images/Portada_Contenido_Para_Joyas_De_Autor.jpg", 
                 gallery: [
                     "images/cpjda1.jpg", "images/cpjda2.jpg", "images/cpjda3.jpg", 
                     "images/cpjda4.jpg", "images/cpjda5.jpg", "images/cpjda6.jpg",
@@ -170,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             img.src = src;
             img.loading = "lazy";
+            img.onload = () => img.classList.add('loaded');
             mediaContainer.appendChild(img);
         });
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -187,12 +226,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const aboutSection = document.getElementById('about-section');
     const closeAbout = document.getElementById('close-about');
     
-    aboutLink.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        aboutSection.classList.add('active'); 
-    });
+    if (aboutLink && aboutSection) {
+        aboutLink.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            aboutSection.classList.add('active'); 
+        });
+    }
     
-    closeAbout.addEventListener('click', () => {
-        aboutSection.classList.remove('active');
-    });
+    if (closeAbout && aboutSection) {
+        closeAbout.addEventListener('click', () => {
+            aboutSection.classList.remove('active');
+        });
+    }
 });
