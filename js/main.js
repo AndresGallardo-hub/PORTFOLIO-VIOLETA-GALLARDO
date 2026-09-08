@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ] 
             },
             { 
-                name: "JOYA DE AUTOR", 
+                name: "JOYAS DE AUTOR", 
                 img: "images/portada_Joya_De_Autor.jpg", 
                 gallery: [
                     "images/jda1.jpg", "images/jda2.jpg", "images/jda3.jpg", 
